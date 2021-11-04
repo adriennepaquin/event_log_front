@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-function DisplayLog({log, handleDeleteLog}){
+function DisplayLog({log, handleDeleteLog, user}){
 
     const [comment, setComment] = useState("")
 
@@ -12,25 +12,31 @@ function DisplayLog({log, handleDeleteLog}){
 
     function handleComment(e){
         e.preventDefault()
-        fetch(`http://localhost:3000/comments`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(comment)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-        })
+        const commentData = {
+            comment: comment,
+            user_id: parseInt(user),
+            log_id: log.id
+        }
+        console.log(commentData)
+        // fetch(`http://localhost:3000/comments`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(comment)
+        // })
+        // .then(res => res.json())
+        // .then(data => {
+        //     console.log(data)
+        // })
     }
 
     return(
         <div>
             <div>
-                Event Log #{log.id}
-                Source IP address: {log.src}
-                Destination IP address: {log.dst}
+                <p>Event Log #{log.id}</p>
+                <p>Source IP address: {log.src}</p>
+                <p>Destination IP address: {log.dst}</p>
             </div>
             <Button value={log.id} onClick={handleDeleteLog}>Delete Log</Button>
             <Form onSubmit={handleComment}>
