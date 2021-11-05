@@ -33,9 +33,25 @@ function Home(){
 
     // set User state
     function handleUser(e) {
-        console.log("click")
-        setUser(e.target.value)
-        console.log(user)
+        setUser({id: e.target.value})
+    }
+
+    // add new Log
+    function handleSubmitLog(e){
+        e.preventDefault()
+        const sendLog = {log: newLog, id: user.id}
+        console.log(sendLog)
+        fetch(`http://localhost:3000/logs`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sendLog)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
     }
 
     // delete log
@@ -64,18 +80,19 @@ function Home(){
     return (
         <div>
             Homepage
-            <div>
-                <h4>Current user:</h4>
-                {/* {user ? {user} : "Please select a user"} */}
-                <p>Current User Id: {!user ? "Please select a user" : {user}}</p>
-            </div>
+            {user ? (
+                <div>Current User: {user.id}</div>
+            ) : (
+                <div>Please Select User</div>
+            )}
+            
             <div>
                 <h3>Select user:</h3>
                 {displayUsers}
             </div>
             <div>
                 <h3>Add Event Log</h3>
-                <NewLogForm setNewLog={setNewLog} user={user}/>
+                <NewLogForm handleSubmit={handleSubmitLog} newLog={newLog} setNewLog={setNewLog} user={user}/>
             </div>
             <div>
                 <h3>All Event Logs:</h3>
