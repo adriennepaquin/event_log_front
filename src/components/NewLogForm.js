@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-function NewLogForm( setNewLog ){
+function NewLogForm( setNewLog, user ){
 
     const [log, setLog] = useState("")
 

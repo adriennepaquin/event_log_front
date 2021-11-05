@@ -58,16 +58,16 @@ function Home(){
     })
 
     const displayUsers = users.map(user => {
-        return <Button key={user.id} value={user.id} onClick={handleUser}>{user.name}</Button>
+        return <Button key={user.id} value={user.id} onClick={handleUser}>{user.id}: {user.name}</Button>
     })
 
     return (
         <div>
             Homepage
             <div>
-                {/* <h4>Current user:</h4>
-                {user ? {user} : "Please select a user"}
-                Current User: {user ? {user} : "Please select a user"} */}
+                <h4>Current user:</h4>
+                {/* {user ? {user} : "Please select a user"} */}
+                <p>Current User Id: {!user ? "Please select a user" : {user}}</p>
             </div>
             <div>
                 <h3>Select user:</h3>
@@ -75,7 +75,7 @@ function Home(){
             </div>
             <div>
                 <h3>Add Event Log</h3>
-                <NewLogForm setNewLog={setNewLog}/>
+                <NewLogForm setNewLog={setNewLog} user={user}/>
             </div>
             <div>
                 <h3>All Event Logs:</h3>
